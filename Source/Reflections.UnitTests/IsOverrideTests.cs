@@ -27,6 +27,20 @@ namespace Reflections.UnitTests
         }
 
         [Test]
+        public void IsNotOverrideReturnsTrueForInheritedMethod()
+        {
+            // Arrange
+            var targetType = typeof(ClassWithOneInheritedMethod);
+            var targetMethod = targetType.GetMethod("DeclaredMethod");
+
+            // Act
+            var result = targetMethod.IsNotOverride();
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Test]
         public void IsNotOverrideReturnsTrueForVirtualMethod()
         {
             // Arrange
@@ -51,6 +65,20 @@ namespace Reflections.UnitTests
 
             // Assert
             action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void IsOverrideReturnsFalseForInheritedMethod()
+        {
+            // Arrange
+            var targetType = typeof(ClassWithOneInheritedMethod);
+            var targetMethod = targetType.GetMethod("DeclaredMethod");
+
+            // Act
+            var result = targetMethod.IsOverride();
+
+            // Assert
+            result.Should().BeFalse();
         }
 
         [Test]

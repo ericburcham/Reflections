@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Reflections
 {
@@ -6,7 +7,10 @@ namespace Reflections
     {
         public static bool IsInherited(this MethodInfo methodInfo)
         {
-            Guard.ArgumentNotNull(() => methodInfo);
+            if (methodInfo == null)
+            {
+                throw new ArgumentNullException("methodInfo", "methodInfo may not be null.");
+            }
 
             var reflectedType = methodInfo.ReflectedType;
             var declaringType = methodInfo.DeclaringType;
@@ -25,11 +29,14 @@ namespace Reflections
 
         public static bool IsOverride(this MethodInfo methodInfo)
         {
-            Guard.ArgumentNotNull(() => methodInfo);
+            if (methodInfo == null)
+            {
+                throw new ArgumentNullException("methodInfo", "methodInfo may not be null.");
+            }
 
-            var reflectedType = methodInfo.ReflectedType;
+            var declaringType = methodInfo.DeclaringType;
             var baseDefinitionType = methodInfo.GetBaseDefinition().DeclaringType;
-            return reflectedType != baseDefinitionType;
+            return declaringType != baseDefinitionType;
         }
     }
 }
