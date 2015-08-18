@@ -75,6 +75,7 @@ namespace Reflections.UnitTests
             MethodInfo targetMethod = null;
 
             // Act
+            // ReSharper disable once ExpressionIsAlwaysNull
             Action action = () => targetMethod.IsNotOverride();
 
             // Assert
@@ -144,6 +145,7 @@ namespace Reflections.UnitTests
             MethodInfo targetMethod = null;
 
             // Act
+            // ReSharper disable once ExpressionIsAlwaysNull
             Action action = () => targetMethod.IsOverride();
 
             // Assert
