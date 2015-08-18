@@ -8,8 +8,15 @@ $solutionFile = ".\Source\Reflections.sln"
 
 
 # Standard PowerShell Functions -------------------------------------------------------------------
-function Make-Directory([string]$path) {
+function Create-Directory([string]$path) {
 	New-Item -ItemType Directory -Force -Path $path
+}
+
+function Delete-Directory([string]$path) {
+    if (Test-Path $path)
+    {
+        Remove-Item $path -Force -Recurse
+    }
 }
 
 function Invoke-Compile {    
@@ -81,7 +88,8 @@ task CleanAll -description "Runs a git clean -xdf.  Prompts first if untracked f
 }
 
 task PackReflections -description "Packs Reflections as a nuget package." {
-	Make-Directory $packageDirectory
+	Delete-Directory $packageDirectory
+    Create-Directory $packageDirectory
 	exec { & $nugetExe pack $reflectionsProject -OutputDirectory $packageDirectory -Prop Configuration=Release -Symbols }
 }
 
