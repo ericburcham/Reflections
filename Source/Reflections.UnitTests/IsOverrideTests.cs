@@ -13,6 +13,20 @@ namespace Reflections.UnitTests
     public class IsOverrideTests
     {
         [Test]
+        public void IsNotOverrideReturnsFalseForOverridenAbstractMethod()
+        {
+            // Arrange
+            var targetType = typeof(ClassWithOneOverridenAbstrctMethod);
+            var targetMethod = targetType.GetMethod("AbstractMethod");
+
+            // Act
+            var result = targetMethod.IsNotOverride();
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Test]
         public void IsNotOverrideReturnsFalseForOverridenMethod()
         {
             // Arrange
@@ -93,6 +107,20 @@ namespace Reflections.UnitTests
 
             // Assert
             result.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsOverrideReturnsTrueForOverridenAbstractMethod()
+        {
+            // Arrange
+            var targetType = typeof(ClassWithOneOverridenAbstrctMethod);
+            var targetMethod = targetType.GetMethod("AbstractMethod");
+
+            // Act
+            var result = targetMethod.IsOverride();
+
+            // Assert
+            result.Should().BeTrue();
         }
 
         [Test]

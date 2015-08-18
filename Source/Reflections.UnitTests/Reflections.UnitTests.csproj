@@ -57,6 +57,7 @@
     <Compile Include="IsInheritedTests.cs" />
     <Compile Include="IsOverrideTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestClasses\ClassWithOneAbstractMethod.cs" />
     <Compile Include="TestClasses\ClassWithOneMethod.cs" />
     <Compile Include="TestClasses\ClassWithOneInheritedMethod.cs" />
     <Compile Include="TestClasses\ClassWithOneOverridenMethod.cs" />
