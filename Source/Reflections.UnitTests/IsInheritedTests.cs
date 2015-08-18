@@ -47,6 +47,7 @@ namespace Reflections.UnitTests
             MethodInfo targetMethod = null;
 
             // Act
+            // ReSharper disable once ExpressionIsAlwaysNull
             Action action = () => targetMethod.IsInherited();
 
             // Assert
@@ -88,6 +89,7 @@ namespace Reflections.UnitTests
             MethodInfo targetMethod = null;
 
             // Act
+            // ReSharper disable once ExpressionIsAlwaysNull
             Action action = () => targetMethod.IsNotInherited();
 
             // Assert
