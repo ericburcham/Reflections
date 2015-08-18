@@ -1,9 +1,11 @@
 # Shared variables --------------------------------------------------------------------------------
 $msbuildExe = Get-Item "C:\Program Files (x86)\MSBuild\12.0\Bin\MSBuild.exe"
 $nugetExe = Get-Item ".\Source\.nuget\NuGet.exe"
-$nugetOutputDirectory = ".\Packages"
+$packageDirectory = ".\Packages"
 $reflectionsProject = ".\Source\Reflections\Reflections.csproj"
 $solutionFile = ".\Source\Reflections.sln"
+
+
 
 # Standard PowerShell Functions -------------------------------------------------------------------
 function Make-Directory([string]$path) {
@@ -29,6 +31,7 @@ function Test-ReparsePoint([string]$path) {
 }
 
 
+
 # Psake tasks -------------------------------------------------------------------------------------
 task default -depends CleanAll, RestorePackages
 
@@ -36,21 +39,21 @@ task ? -description "Writes task documentation to the console." {
     WriteDocumentation
 }
 
+task BuildAllConfigurations -description "Builds all valid solution configurations." -depends BuildDebug, BuildRelease
+
+task BuildAllConfigurationsWithPrerequisites -description "Builds all valid solution configurations.  Runs prerequisites first." -depends RestorePackages, BuildDebug, BuildRelease
+
 task BuildDebug -description "Builds Reflections.sln in the debug configuration." {
 	Invoke-Compile $SolutionFile "Debug" "Any CPU"
 }
 
-task BuildDebugWithPrerequisites -depends RestorePackages, BuildDebug -description "Builds Reflections.sln in the debug configuration.  Runs prerequisite steps first." {
-
-}
+task BuildDebugWithPrerequisites -description "Builds Reflections.sln in the debug configuration.  Runs prerequisite steps first." -depends RestorePackages, BuildDebug
 
 task BuildRelease -description "Builds Reflections.sln in the release configuration." {
 	Invoke-Compile $SolutionFile "Release" "Any CPU"
 }
 
-task BuildReleaseWithPrerequisites -depends RestorePackages, BuildRelease -description "Builds Reflections.sln in the debug configuration.  Runs prerequisite steps first." {
-
-}
+task BuildReleaseWithPrerequisites -description "Builds Reflections.sln in the debug configuration.  Runs prerequisite steps first." -depends RestorePackages, BuildRelease
 
 task CleanAll -description "Runs a git clean -xdf.  Prompts first if untracked files are found." {
     $gitStatus = (@(git status --porcelain) | Out-String)
@@ -78,13 +81,21 @@ task CleanAll -description "Runs a git clean -xdf.  Prompts first if untracked f
 }
 
 task PackReflections -description "Packs Reflections as a nuget package." {
-	Make-Directory $nugetOutputDirectory
-	exec { & $nugetExe pack $reflectionsProject -OutputDirectory $nugetOutputDirectory -Prop Configuration=Release -Symbols }
+	Make-Directory $packageDirectory
+	exec { & $nugetExe pack $reflectionsProject -OutputDirectory $packageDirectory -Prop Configuration=Release -Symbols }
 }
 
-task PackReflectionsWithPrerequisites -depends BuildReleaseWithPrerequisites, PackReflections -description "Packs Reflections as a nuget package.  Runs prerequisites first." {
+task PackReflectionsWithPrerequisites -description "Packs Reflections as a nuget package.  Runs prerequisites first." -depends BuildAllConfigurationsWithPrerequisites, PackReflections
 
+task PushReflections -description "Pushes Reflections to nuget.org." {
+	$packages = Get-ChildItem $packageDirectory\Reflections.*.nupkg
+	foreach ($package in $packages)
+	{
+		exec { & $nugetExe push $package.FullName }
+	}
 }
+
+task PushReflectionsWithPrerequisites -depends PackReflectionsWithPrerequisites, PushReflections -description "Pushes Relfections to nuget.org.  Runs prerequisites first."
 
 task RestorePackages -description "Restores all nuget packages in the solution." {
 	exec { & $nugetExe restore $solutionFile }
