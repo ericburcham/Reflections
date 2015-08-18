@@ -14,10 +14,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneInheritedAttributedMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.DoesNotHaveAttribute<DummyAttribute>(true);
+            var result = targetElement.DoesNotHaveAttribute<DummyAttribute>(true);
 
             // Assert
             result.Should().BeFalse();
@@ -28,10 +28,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneAttributedMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.DoesNotHaveAttribute<DummyAttribute>();
+            var result = targetElement.DoesNotHaveAttribute<DummyAttribute>();
 
             // Assert
             result.Should().BeFalse();
@@ -42,10 +42,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneInheritedAttributedMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.DoesNotHaveAttribute<DummyAttribute>();
+            var result = targetElement.DoesNotHaveAttribute<DummyAttribute>();
 
             // Assert
             result.Should().BeTrue();
@@ -56,10 +56,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.DoesNotHaveAttribute<DummyAttribute>();
+            var result = targetElement.DoesNotHaveAttribute<DummyAttribute>();
 
             // Assert
             result.Should().BeTrue();
@@ -70,10 +70,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneInheritedAttributedMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.HasAttribute<DummyAttribute>();
+            var result = targetElement.HasAttribute<DummyAttribute>();
 
             // Assert
             result.Should().BeFalse();
@@ -84,10 +84,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.HasAttribute<DummyAttribute>();
+            var result = targetElement.HasAttribute<DummyAttribute>();
 
             // Assert
             result.Should().BeFalse();
@@ -98,10 +98,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneInheritedAttributedMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.HasAttribute<DummyAttribute>(true);
+            var result = targetElement.HasAttribute<DummyAttribute>(true);
 
             // Assert
             result.Should().BeTrue();
@@ -112,10 +112,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneAttributedMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.HasAttribute<DummyAttribute>();
+            var result = targetElement.HasAttribute<DummyAttribute>();
 
             // Assert
             result.Should().BeTrue();

@@ -17,10 +17,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneOverridenAbstrctMethod);
-            var targetMethod = targetType.GetMethod("AbstractMethod");
+            var targetElement = targetType.GetMethod("AbstractMethod");
 
             // Act
-            var result = targetMethod.IsNotOverride();
+            var result = targetElement.IsNotOverride();
 
             // Assert
             result.Should().BeFalse();
@@ -31,10 +31,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneOverridenMethod);
-            var targetMethod = targetType.GetMethod("VirtualMethod");
+            var targetElement = targetType.GetMethod("VirtualMethod");
 
             // Act
-            var result = targetMethod.IsNotOverride();
+            var result = targetElement.IsNotOverride();
 
             // Assert
             result.Should().BeFalse();
@@ -45,10 +45,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneInheritedMethod);
-            var targetMethod = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMethod.IsNotOverride();
+            var result = targetElement.IsNotOverride();
 
             // Assert
             result.Should().BeTrue();
@@ -59,10 +59,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneVirtualMethod);
-            var targetMethod = targetType.GetMethod("VirtualMethod");
+            var targetElement = targetType.GetMethod("VirtualMethod");
 
             // Act
-            var result = targetMethod.IsNotOverride();
+            var result = targetElement.IsNotOverride();
 
             // Assert
             result.Should().BeTrue();
@@ -72,11 +72,11 @@ namespace Reflections.UnitTests
         public void IsNotOverrideThrowsArgumentNullException()
         {
             // Arrange
-            MethodInfo targetMethod = null;
+            MethodInfo targetElement = null;
 
             // Act
             // ReSharper disable once ExpressionIsAlwaysNull
-            Action action = () => targetMethod.IsNotOverride();
+            Action action = () => targetElement.IsNotOverride();
 
             // Assert
             action.ShouldThrow<ArgumentNullException>();
@@ -87,10 +87,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneInheritedMethod);
-            var targetMethod = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMethod.IsOverride();
+            var result = targetElement.IsOverride();
 
             // Assert
             result.Should().BeFalse();
@@ -101,10 +101,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneVirtualMethod);
-            var targetMethod = targetType.GetMethod("VirtualMethod");
+            var targetElement = targetType.GetMethod("VirtualMethod");
 
             // Act
-            var result = targetMethod.IsOverride();
+            var result = targetElement.IsOverride();
 
             // Assert
             result.Should().BeFalse();
@@ -115,10 +115,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneOverridenAbstrctMethod);
-            var targetMethod = targetType.GetMethod("AbstractMethod");
+            var targetElement = targetType.GetMethod("AbstractMethod");
 
             // Act
-            var result = targetMethod.IsOverride();
+            var result = targetElement.IsOverride();
 
             // Assert
             result.Should().BeTrue();
@@ -129,10 +129,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneOverridenMethod);
-            var targetMethod = targetType.GetMethod("VirtualMethod");
+            var targetElement = targetType.GetMethod("VirtualMethod");
 
             // Act
-            var result = targetMethod.IsOverride();
+            var result = targetElement.IsOverride();
 
             // Assert
             result.Should().BeTrue();
@@ -142,11 +142,11 @@ namespace Reflections.UnitTests
         public void IsOverrideThrowsArgumentNullException()
         {
             // Arrange
-            MethodInfo targetMethod = null;
+            MethodInfo targetElement = null;
 
             // Act
             // ReSharper disable once ExpressionIsAlwaysNull
-            Action action = () => targetMethod.IsOverride();
+            Action action = () => targetElement.IsOverride();
 
             // Assert
             action.ShouldThrow<ArgumentNullException>();

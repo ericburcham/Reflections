@@ -17,10 +17,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.IsInherited();
+            var result = targetElement.IsInherited();
 
             // Assert
             result.Should().BeFalse();
@@ -31,10 +31,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneInheritedMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.IsInherited();
+            var result = targetElement.IsInherited();
 
             // Assert
             result.Should().BeTrue();
@@ -44,11 +44,11 @@ namespace Reflections.UnitTests
         public void IsInheritedThrowsArgumentNullException()
         {
             // Arrange
-            MethodInfo targetMember = null;
+            MethodInfo targetElement = null;
 
             // Act
             // ReSharper disable once ExpressionIsAlwaysNull
-            Action action = () => targetMember.IsInherited();
+            Action action = () => targetElement.IsInherited();
 
             // Assert
             action.ShouldThrow<ArgumentNullException>();
@@ -59,10 +59,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneInheritedMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.IsNotInherited();
+            var result = targetElement.IsNotInherited();
 
             // Assert
             result.Should().BeFalse();
@@ -73,10 +73,10 @@ namespace Reflections.UnitTests
         {
             // Arrange
             var targetType = typeof(ClassWithOneMethod);
-            var targetMember = targetType.GetMethod("DeclaredMethod");
+            var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.IsNotInherited();
+            var result = targetElement.IsNotInherited();
 
             // Assert
             result.Should().BeTrue();
@@ -86,11 +86,11 @@ namespace Reflections.UnitTests
         public void IsNotInheritedThrowsArgumentNullException()
         {
             // Arrange
-            MethodInfo targetMember = null;
+            MethodInfo targetElement = null;
 
             // Act
             // ReSharper disable once ExpressionIsAlwaysNull
-            Action action = () => targetMember.IsNotInherited();
+            Action action = () => targetElement.IsNotInherited();
 
             // Assert
             action.ShouldThrow<ArgumentNullException>();
