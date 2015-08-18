@@ -1,9 +1,9 @@
 ﻿namespace Reflections.UnitTests.TestClasses
 {
-    public class ClassWithOneAttributedMethod
+    internal class ClassWithOneAttributedMethod
     {
         [Dummy]
-        public string DeclaredMethod()
+        public virtual string DeclaredMethod()
         {
             return string.Empty;
         }

@@ -5,20 +5,20 @@ namespace Reflections
 {
     public static class MethodInfoExtensions
     {
-        public static bool IsNotOverride(this MethodInfo methodInfo)
+        public static bool IsNotOverride(this MethodInfo element)
         {
-            return !IsOverride(methodInfo);
+            return !IsOverride(element);
         }
 
-        public static bool IsOverride(this MethodInfo methodInfo)
+        public static bool IsOverride(this MethodInfo element)
         {
-            if (methodInfo == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("methodInfo", "methodInfo may not be null.");
+                throw new ArgumentNullException("element", "methodInfo may not be null.");
             }
 
-            var declaringType = methodInfo.DeclaringType;
-            var baseDefinitionType = methodInfo.GetBaseDefinition().DeclaringType;
+            var declaringType = element.DeclaringType;
+            var baseDefinitionType = element.GetBaseDefinition().DeclaringType;
             return declaringType != baseDefinitionType;
         }
     }

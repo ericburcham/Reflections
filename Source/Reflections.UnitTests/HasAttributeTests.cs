@@ -1,6 +1,4 @@
-﻿using System;
-
-using FluentAssertions;
+﻿using FluentAssertions;
 
 using NUnit.Framework;
 
@@ -12,17 +10,17 @@ namespace Reflections.UnitTests
     public class HasAttributeTests
     {
         [Test]
-        public void DoesNotHaveAttributeReturnsTrueWhenAttributeIsNotApplied()
+        public void DoesNotHaveAttributeReturnsFalseForOverrideOfAttributedMethodWhenInheritFlagIsTrue()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneMethod);
+            var targetType = typeof(ClassWithOneInheritedAttributedMethod);
             var targetMember = targetType.GetMethod("DeclaredMethod");
 
             // Act
-            var result = targetMember.DoesNotHaveAttribute<DummyAttribute>();
+            var result = targetMember.DoesNotHaveAttribute<DummyAttribute>(true);
 
             // Assert
-            result.Should().BeTrue();
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -40,6 +38,48 @@ namespace Reflections.UnitTests
         }
 
         [Test]
+        public void DoesNotHaveAttributeReturnsTrueForOverrideOfAttributedMethodWhenInheritFlagIsFalse()
+        {
+            // Arrange
+            var targetType = typeof(ClassWithOneInheritedAttributedMethod);
+            var targetMember = targetType.GetMethod("DeclaredMethod");
+
+            // Act
+            var result = targetMember.DoesNotHaveAttribute<DummyAttribute>();
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void DoesNotHaveAttributeReturnsTrueWhenAttributeIsNotApplied()
+        {
+            // Arrange
+            var targetType = typeof(ClassWithOneMethod);
+            var targetMember = targetType.GetMethod("DeclaredMethod");
+
+            // Act
+            var result = targetMember.DoesNotHaveAttribute<DummyAttribute>();
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void HasAttributeReturnsFalseForOverrideOfAttributedMethodWhenInheritFlagIsFalse()
+        {
+            // Arrange
+            var targetType = typeof(ClassWithOneInheritedAttributedMethod);
+            var targetMember = targetType.GetMethod("DeclaredMethod");
+
+            // Act
+            var result = targetMember.HasAttribute<DummyAttribute>();
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Test]
         public void HasAttributeReturnsFalseWhenAttributeIsNotApplied()
         {
             // Arrange
@@ -51,6 +91,20 @@ namespace Reflections.UnitTests
 
             // Assert
             result.Should().BeFalse();
+        }
+
+        [Test]
+        public void HasAttributeReturnsTrueForOverrideOfAttributedMethodWhenInheritFlagIsTrue()
+        {
+            // Arrange
+            var targetType = typeof(ClassWithOneInheritedAttributedMethod);
+            var targetMember = targetType.GetMethod("DeclaredMethod");
+
+            // Act
+            var result = targetMember.HasAttribute<DummyAttribute>(true);
+
+            // Assert
+            result.Should().BeTrue();
         }
 
         [Test]

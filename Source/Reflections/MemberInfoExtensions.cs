@@ -6,31 +6,31 @@ namespace Reflections
 {
     public static class MemberInfoExtensions
     {
-        public static bool DoesNotHaveAttribute<T>(this MemberInfo memberInfo, bool inherit = false) where T : Attribute
+        public static bool DoesNotHaveAttribute<T>(this MemberInfo element, bool inherit = false) where T : Attribute
         {
-            return !HasAttribute<T>(memberInfo, inherit);
+            return !HasAttribute<T>(element, inherit);
         }
 
-        public static bool HasAttribute<T>(this MemberInfo memberInfo, bool inherit = false) where T: Attribute
+        public static bool HasAttribute<T>(this MemberInfo element, bool inherit = false) where T : Attribute
         {
-            return memberInfo.GetCustomAttributes<T>(inherit).Any();
+            return element.GetCustomAttributes<T>(inherit).Any();
         }
 
-        public static bool IsInherited(this MemberInfo memberInfo)
+        public static bool IsInherited(this MemberInfo element)
         {
-            if (memberInfo == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("memberInfo", "methodInfo may not be null.");
+                throw new ArgumentNullException("element", "methodInfo may not be null.");
             }
 
-            var reflectedType = memberInfo.ReflectedType;
-            var declaringType = memberInfo.DeclaringType;
+            var reflectedType = element.ReflectedType;
+            var declaringType = element.DeclaringType;
             return reflectedType != declaringType;
         }
 
-        public static bool IsNotInherited(this MemberInfo memberInfo)
+        public static bool IsNotInherited(this MemberInfo element)
         {
-            return !IsInherited(memberInfo);
+            return !IsInherited(element);
         }
     }
 }
