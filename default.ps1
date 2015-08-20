@@ -1,5 +1,5 @@
 # Shared variables --------------------------------------------------------------------------------
-$msbuildExe = Get-Item "C:\Program Files (x86)\MSBuild\12.0\Bin\MSBuild.exe"
+$msbuildExe = Get-Item "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
 $nugetExe = Get-Item ".\Source\.nuget\NuGet.exe"
 $packageDirectory = ".\Packages"
 $reflectionsProject = ".\Source\Reflections\Reflections.csproj"
@@ -40,7 +40,7 @@ function Test-ReparsePoint([string]$path) {
 
 
 # Psake tasks -------------------------------------------------------------------------------------
-task default -depends CleanAll, RestorePackages
+task default -depends CleanAll, RestorePackages, BuildDebug, BuildRelease, PackReflections
 
 task ? -description "Writes task documentation to the console." {
     WriteDocumentation
