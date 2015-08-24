@@ -93,7 +93,7 @@ task PackReflections -description "Packs Reflections as a nuget package." {
 	exec { & $nugetExe pack $reflectionsProject -OutputDirectory $packageDirectory -Prop Configuration=Release -Symbols }
 }
 
-task PackReflectionsWithPrerequisites -description "Packs Reflections as a nuget package.  Runs prerequisites first." -depends BuildAllConfigurationsWithPrerequisites, PackReflections
+task PackReflectionsWithPrerequisites -description "Packs Reflections as a nuget package.  Runs prerequisites first." -depends RestorePackages, BuildDebug, BuildRelease, PackReflections
 
 task PushReflections -description "Pushes Reflections to nuget.org." {
 	$packages = Get-ChildItem $packageDirectory\Reflections.*.nupkg
@@ -103,7 +103,7 @@ task PushReflections -description "Pushes Reflections to nuget.org." {
 	}
 }
 
-task PushReflectionsWithPrerequisites -depends PackReflectionsWithPrerequisites, PushReflections -description "Pushes Relfections to nuget.org.  Runs prerequisites first."
+task PushReflectionsWithPrerequisites -depends RestorePackages, BuildDebug, BuildRelease, PackReflections, PushReflections -description "Pushes Relfections to nuget.org.  Runs prerequisites first."
 
 task RestorePackages -description "Restores all nuget packages in the solution." {
 	exec { & $nugetExe restore $solutionFile }
