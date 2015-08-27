@@ -108,3 +108,7 @@ task PushReflectionsWithPrerequisites -depends RestorePackages, BuildDebug, Buil
 task RestorePackages -description "Restores all nuget packages in the solution." {
 	exec { & $nugetExe restore $solutionFile }
 }
+
+task Start:VisualStudio -description "Opens Reflections.sln in Visual Studio" {
+    Invoke-Item .\Source\Reflections.sln
+}
