@@ -40,7 +40,7 @@ function Test-ReparsePoint([string]$path) {
 
 
 # Psake tasks -------------------------------------------------------------------------------------
-task default -depends CleanAll, RestorePackages, BuildDebug, BuildRelease, PackReflections
+task default -depends CleanAll, RestorePackages, BuildDebug, BuildRelease, Pack
 
 task ? -description "Writes task documentation to the console." {
     WriteDocumentation
@@ -87,15 +87,15 @@ task CleanAll -description "Runs a git clean -xdf.  Prompts first if untracked f
 	}
 }
 
-task PackReflections -description "Packs Reflections as a nuget package." {
+task Pack -description "Packs Reflections as a nuget package." {
 	Delete-Directory $packageDirectory
     Create-Directory $packageDirectory
 	exec { & $nugetExe pack $reflectionsProject -OutputDirectory $packageDirectory -Prop Configuration=Release -Symbols }
 }
 
-task PackReflectionsWithPrerequisites -description "Packs Reflections as a nuget package.  Runs prerequisites first." -depends RestorePackages, BuildDebug, BuildRelease, PackReflections
+task PackWithPrerequisites -description "Packs Reflections as a nuget package.  Runs prerequisites first." -depends RestorePackages, BuildDebug, BuildRelease, Pack
 
-task PushReflections -description "Pushes Reflections to nuget.org." {
+task Push -description "Pushes Reflections to nuget.org." {
 	$packages = Get-ChildItem $packageDirectory\Reflections.*.nupkg
 	foreach ($package in $packages)
 	{
@@ -103,7 +103,7 @@ task PushReflections -description "Pushes Reflections to nuget.org." {
 	}
 }
 
-task PushReflectionsWithPrerequisites -depends RestorePackages, BuildDebug, BuildRelease, PackReflections, PushReflections -description "Pushes Relfections to nuget.org.  Runs prerequisites first."
+task PushWithPrerequisites -depends RestorePackages, BuildDebug, BuildRelease, Pack, Push -description "Pushes Relfections to nuget.org.  Runs prerequisites first."
 
 task RestorePackages -description "Restores all nuget packages in the solution." {
 	exec { & $nugetExe restore $solutionFile }
