@@ -1,12 +1,28 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+
+using Funky;
 
 namespace Reflections
 {
     public static class MemberInfoExtensions
     {
+        private static readonly Func<Type, MemberInfo, bool, bool> MemoizedHasAttribute =
+            ((Func<Type, MemberInfo, bool, bool>)((type, element, inherit) =>
+                {
+                    var getCustomAttributesMethod = ReflectedMethods.MakeClosuredGetCustomAttributesMethodForType(type);
+                    var getCustomAttributesMethodInvocationResults = getCustomAttributesMethod.Invoke(null, new object[] { element, inherit });
+                    return ((object[])getCustomAttributesMethodInvocationResults).Any();
+                })).Memoize(true);
+
+        private static readonly Func<MemberInfo, bool> MemoizedIsInherited = ((Func<MemberInfo, bool>)(element =>
+            {
+                var reflectedType = element.ReflectedType;
+                var declaringType = element.DeclaringType;
+                return reflectedType != declaringType;
+            })).Memoize(true);
+
         public static bool DoesNotHaveAttribute<T>(this MemberInfo element, bool inherit = false) where T : Attribute
         {
             return !HasAttribute<T>(element, inherit);
@@ -14,24 +30,29 @@ namespace Reflections
 
         public static bool HasAttribute<T>(this MemberInfo element, bool inherit = false) where T : Attribute
         {
-            return element.GetCustomAttributes<T>(inherit).Any();
+            element.ThrowIfNull();
+
+            return MemoizedHasAttribute(typeof(T), element, inherit);
         }
 
         public static bool IsInherited(this MemberInfo element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element", "methodInfo may not be null.");
-            }
+            element.ThrowIfNull();
 
-            var reflectedType = element.ReflectedType;
-            var declaringType = element.DeclaringType;
-            return reflectedType != declaringType;
+            return MemoizedIsInherited(element);
         }
 
         public static bool IsNotInherited(this MemberInfo element)
         {
             return !IsInherited(element);
+        }
+
+        private static void ThrowIfNull(this MemberInfo element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element), "methodInfo may not be null.");
+            }
         }
     }
 }

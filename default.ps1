@@ -29,7 +29,7 @@ function Invoke-Compile {
     
 	Write-Host "Running Build for solution @" $slnPath -ForegroundColor Cyan
     $config = "Configuration=" + $configuration + ";Platform="+ $platform
-    exec { & $msbuildExe $slnPath /m /nologo /p:$($config) /t:build /v:m }
+    exec { & $msbuildExe $slnPath /m /nologo /p:$($config) /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=../StrongNameKey.snk /t:build /v:m }
 }
 
 function Test-ReparsePoint([string]$path) {
