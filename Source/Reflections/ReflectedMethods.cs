@@ -8,15 +8,6 @@ namespace Reflections
 {
     internal static class ReflectedMethods
     {
-        private static MethodInfo MakeClosuredGetCustomAttributesMethod(Type type)
-        {
-            return GetCustomAttributes.MakeGenericMethod(type);
-        }
-
-        private static readonly Func<Type, MethodInfo> ClosuredGetCustomAttributesMethod = MakeClosuredGetCustomAttributesMethod;
-
-        private static readonly Func<Type, MethodInfo> MemoizedGetCustomAttributesMethod = ClosuredGetCustomAttributesMethod.Memoize(true);
-
         public static readonly MethodInfo GetCustomAttributes =
             typeof(CustomAttributeExtensions).GetMethods(BindingFlags.Public | BindingFlags.Static)
                 .Where(mi => mi.Name == "GetCustomAttributes")
@@ -29,5 +20,16 @@ namespace Reflections
         {
             return MemoizedGetCustomAttributesMethod(type);
         }
+
+        private static readonly Func<Type, MethodInfo> ClosuredGetCustomAttributesMethod =
+            MakeClosuredGetCustomAttributesMethod;
+
+        private static MethodInfo MakeClosuredGetCustomAttributesMethod(Type type)
+        {
+            return GetCustomAttributes.MakeGenericMethod(type);
+        }
+
+        private static readonly Func<Type, MethodInfo> MemoizedGetCustomAttributesMethod =
+            ClosuredGetCustomAttributesMethod.Memoize(true);
     }
 }
