@@ -3,6 +3,6 @@ install:
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory nunit-runner
 language: csharp
 script:
-  - xbuild /p:Configuration=Release solution-name.sln
+  - xbuild /p:Configuration=Release ./Source/Reflections.sln
   - mono ./nunit-runner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./Source/Reflections.UnitTests/bin/Release/Reflections.UnitTests.dll
 solution: ./Source/Reflections.sln
