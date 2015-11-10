@@ -7,10 +7,6 @@ namespace Reflections
 {
     public static class TypeExtensions
     {
-        private static readonly Func<Type, Type[]> MemoizedGetAssemblyTypes = ((Func<Type, Type[]>)(type => type.Assembly.GetTypes())).Memoize(true);
-
-        private static readonly Func<Type, bool> IsGenericMemoized = ((Func<Type, bool>)(type => type.IsGenericType)).Memoize();
-
         public static IEnumerable<Type> GetAssemblyTypes(this Type type)
         {
             return MemoizedGetAssemblyTypes(type);
@@ -44,5 +40,9 @@ namespace Reflections
         {
             return typeof(T).IsAssignableFrom(type);
         }
+
+        private static readonly Func<Type, Type[]> MemoizedGetAssemblyTypes = ((Func<Type, Type[]>)(type => type.Assembly.GetTypes())).Memoize(true);
+
+        private static readonly Func<Type, bool> IsGenericMemoized = ((Func<Type, bool>)(type => type.IsGenericType)).Memoize();
     }
 }
