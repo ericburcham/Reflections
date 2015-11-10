@@ -8,21 +8,6 @@ namespace Reflections
 {
     public static class MemberInfoExtensions
     {
-        private static readonly Func<Type, MemberInfo, bool, bool> MemoizedHasAttribute =
-            ((Func<Type, MemberInfo, bool, bool>)((type, element, inherit) =>
-                {
-                    var getCustomAttributesMethod = ReflectedMethods.MakeClosuredGetCustomAttributesMethodForType(type);
-                    var getCustomAttributesMethodInvocationResults = getCustomAttributesMethod.Invoke(null, new object[] { element, inherit });
-                    return ((object[])getCustomAttributesMethodInvocationResults).Any();
-                })).Memoize(true);
-
-        private static readonly Func<MemberInfo, bool> MemoizedIsInherited = ((Func<MemberInfo, bool>)(element =>
-            {
-                var reflectedType = element.ReflectedType;
-                var declaringType = element.DeclaringType;
-                return reflectedType != declaringType;
-            })).Memoize(true);
-
         public static bool DoesNotHaveAttribute<T>(this MemberInfo element, bool inherit = false) where T : Attribute
         {
             return !HasAttribute<T>(element, inherit);
@@ -54,5 +39,20 @@ namespace Reflections
                 throw new ArgumentNullException(nameof(element), "methodInfo may not be null.");
             }
         }
+
+        private static readonly Func<Type, MemberInfo, bool, bool> MemoizedHasAttribute =
+            ((Func<Type, MemberInfo, bool, bool>)((type, element, inherit) =>
+                {
+                    var getCustomAttributesMethod = ReflectedMethods.MakeClosuredGetCustomAttributesMethodForType(type);
+                    var getCustomAttributesMethodInvocationResults = getCustomAttributesMethod.Invoke(null, new object[] { element, inherit });
+                    return ((object[])getCustomAttributesMethodInvocationResults).Any();
+                })).Memoize(true);
+
+        private static readonly Func<MemberInfo, bool> MemoizedIsInherited = ((Func<MemberInfo, bool>)(element =>
+            {
+                var reflectedType = element.ReflectedType;
+                var declaringType = element.DeclaringType;
+                return reflectedType != declaringType;
+            })).Memoize(true);
     }
 }
