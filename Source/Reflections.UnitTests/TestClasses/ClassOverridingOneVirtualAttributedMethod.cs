@@ -1,6 +1,6 @@
 ﻿namespace Reflections.UnitTests.TestClasses
 {
-    internal class ClassWithOneInheritedAttributedMethod : ClassWithOneAttributedMethod
+    internal class ClassOverridingOneVirtualAttributedMethod : ClassWithOneVirtualAttributedMethod
     {
         public override string DeclaredMethod()
         {

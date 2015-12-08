@@ -16,7 +16,7 @@ namespace Reflections.UnitTests
         public void IsNotOverrideReturnsFalseForOverridenAbstractMethod()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneOverridenAbstrctMethod);
+            var targetType = typeof(ClassOverridingOneAbstractMethod);
             var targetElement = targetType.GetMethod("AbstractMethod");
 
             // Act
@@ -30,7 +30,7 @@ namespace Reflections.UnitTests
         public void IsNotOverrideReturnsFalseForOverridenMethod()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneOverridenMethod);
+            var targetType = typeof(ClassOverridingOneVirtualMethod);
             var targetElement = targetType.GetMethod("VirtualMethod");
 
             // Act
@@ -44,7 +44,7 @@ namespace Reflections.UnitTests
         public void IsNotOverrideReturnsTrueForInheritedMethod()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneInheritedMethod);
+            var targetType = typeof(ClassInheritingOneMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
@@ -86,7 +86,7 @@ namespace Reflections.UnitTests
         public void IsOverrideReturnsFalseForInheritedMethod()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneInheritedMethod);
+            var targetType = typeof(ClassInheritingOneMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
@@ -114,7 +114,7 @@ namespace Reflections.UnitTests
         public void IsOverrideReturnsTrueForOverridenAbstractMethod()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneOverridenAbstrctMethod);
+            var targetType = typeof(ClassOverridingOneAbstractMethod);
             var targetElement = targetType.GetMethod("AbstractMethod");
 
             // Act
@@ -128,7 +128,7 @@ namespace Reflections.UnitTests
         public void IsOverrideReturnsTrueForOverridenMethod()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneOverridenMethod);
+            var targetType = typeof(ClassOverridingOneVirtualMethod);
             var targetElement = targetType.GetMethod("VirtualMethod");
 
             // Act
