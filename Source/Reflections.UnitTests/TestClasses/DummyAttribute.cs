@@ -2,7 +2,7 @@
 
 namespace Reflections.UnitTests.TestClasses
 {
-    public class DummyAttribute : Attribute
+    internal class DummyAttribute : Attribute
     {
     }
 }

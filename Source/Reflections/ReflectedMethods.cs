@@ -16,20 +16,18 @@ namespace Reflections
                 .Where(mi => mi.GetParameters()[0].ParameterType == typeof(MemberInfo))
                 .Single(mi => mi.GetParameters()[1].ParameterType == typeof(bool));
 
-        public static MethodInfo MakeClosuredGetCustomAttributesMethodForType(Type type)
-        {
-            return MemoizedGetCustomAttributesMethod(type);
-        }
-
-        private static readonly Func<Type, MethodInfo> ClosuredGetCustomAttributesMethod =
-            MakeClosuredGetCustomAttributesMethod;
+        private static readonly Func<Type, MethodInfo> ClosuredGetCustomAttributesMethod = MakeClosuredGetCustomAttributesMethod;
 
         private static MethodInfo MakeClosuredGetCustomAttributesMethod(Type type)
         {
             return GetCustomAttributes.MakeGenericMethod(type);
         }
 
-        private static readonly Func<Type, MethodInfo> MemoizedGetCustomAttributesMethod =
-            ClosuredGetCustomAttributesMethod.Memoize(true);
+        public static MethodInfo MakeClosuredGetCustomAttributesMethodForType(Type type)
+        {
+            return MemoizedGetCustomAttributesMethod(type);
+        }
+
+        private static readonly Func<Type, MethodInfo> MemoizedGetCustomAttributesMethod = ClosuredGetCustomAttributesMethod.Memoize(true);
     }
 }

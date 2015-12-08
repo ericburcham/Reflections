@@ -13,7 +13,7 @@ namespace Reflections.UnitTests
         public void DoesNotHaveAttributeReturnsFalseForOverrideOfAttributedMethodWhenInheritFlagIsTrue()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneInheritedAttributedMethod);
+            var targetType = typeof(ClassOverridingOneVirtualAttributedMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
@@ -27,7 +27,7 @@ namespace Reflections.UnitTests
         public void DoesNotHaveAttributeReturnsFalseWhenAttributeIsApplied()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneAttributedMethod);
+            var targetType = typeof(ClassWithOneVirtualAttributedMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
@@ -41,7 +41,7 @@ namespace Reflections.UnitTests
         public void DoesNotHaveAttributeReturnsTrueForOverrideOfAttributedMethodWhenInheritFlagIsFalse()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneInheritedAttributedMethod);
+            var targetType = typeof(ClassOverridingOneVirtualAttributedMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
@@ -69,7 +69,7 @@ namespace Reflections.UnitTests
         public void HasAttributeReturnsFalseForOverrideOfAttributedMethodWhenInheritFlagIsFalse()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneInheritedAttributedMethod);
+            var targetType = typeof(ClassOverridingOneVirtualAttributedMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
@@ -97,7 +97,7 @@ namespace Reflections.UnitTests
         public void HasAttributeReturnsTrueForOverrideOfAttributedMethodWhenInheritFlagIsTrue()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneInheritedAttributedMethod);
+            var targetType = typeof(ClassOverridingOneVirtualAttributedMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
@@ -111,7 +111,7 @@ namespace Reflections.UnitTests
         public void HasAttributeReturnsTrueWhenAttributeIsApplied()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneAttributedMethod);
+            var targetType = typeof(ClassWithOneVirtualAttributedMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act

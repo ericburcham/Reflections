@@ -30,7 +30,7 @@ namespace Reflections.UnitTests
         public void IsInheritedReturnsTrueForDeclaredMethod()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneInheritedMethod);
+            var targetType = typeof(ClassInheritingOneMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act
@@ -58,7 +58,7 @@ namespace Reflections.UnitTests
         public void IsNotInheritedReturnsFalseForDeclaredMethod()
         {
             // Arrange
-            var targetType = typeof(ClassWithOneInheritedMethod);
+            var targetType = typeof(ClassInheritingOneMethod);
             var targetElement = targetType.GetMethod("DeclaredMethod");
 
             // Act

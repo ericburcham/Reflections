@@ -1,6 +1,6 @@
 ﻿namespace Reflections.UnitTests.TestClasses
 {
-    internal class ClassWithOneFieldBackedProperty
+    internal class ClassWithOneBackedProperty
     {
         private string _declaredProperty;
 

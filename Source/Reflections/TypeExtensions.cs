@@ -9,7 +9,7 @@ namespace Reflections
     {
         public static IEnumerable<Type> GetAssemblyTypes(this Type type)
         {
-            return MemoizedGetAssemblyTypes(type);
+            return GetAssemblyTypesMemoized(type);
         }
 
         public static bool IsGeneric(this Type type)
@@ -27,6 +27,11 @@ namespace Reflections
             return !IsGeneric(type);
         }
 
+        public static bool IsNotOfType<T>(this Type type)
+        {
+            return !IsOfType<T>(type);
+        }
+
         public static bool IsNullable(this Type type)
         {
             if (!type.IsGenericType)
@@ -38,11 +43,13 @@ namespace Reflections
 
         public static bool IsOfType<T>(this Type type)
         {
-            return typeof(T).IsAssignableFrom(type);
+            return IsOfTypeMemoized(type, typeof(T));
         }
 
-        private static readonly Func<Type, Type[]> MemoizedGetAssemblyTypes = ((Func<Type, Type[]>)(type => type.Assembly.GetTypes())).Memoize(true);
+        private static readonly Func<Type, Type[]> GetAssemblyTypesMemoized = ((Func<Type, Type[]>)(type => type.Assembly.GetTypes())).Memoize(true);
 
         private static readonly Func<Type, bool> IsGenericMemoized = ((Func<Type, bool>)(type => type.IsGenericType)).Memoize();
+
+        private static readonly Func<Type, Type, bool> IsOfTypeMemoized = ((Func<Type, Type, bool>)((extendedType, typeParameterType) => typeParameterType.IsAssignableFrom(extendedType))).Memoize(true);
     }
 }

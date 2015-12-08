@@ -17,14 +17,14 @@ namespace Reflections
         {
             element.ThrowIfNull();
 
-            return MemoizedHasAttribute(typeof(T), element, inherit);
+            return HasAttributeMemoized(typeof(T), element, inherit);
         }
 
         public static bool IsInherited(this MemberInfo element)
         {
             element.ThrowIfNull();
 
-            return MemoizedIsInherited(element);
+            return IsInheritedMemoized(element);
         }
 
         public static bool IsNotInherited(this MemberInfo element)
@@ -40,7 +40,7 @@ namespace Reflections
             }
         }
 
-        private static readonly Func<Type, MemberInfo, bool, bool> MemoizedHasAttribute =
+        private static readonly Func<Type, MemberInfo, bool, bool> HasAttributeMemoized =
             ((Func<Type, MemberInfo, bool, bool>)((type, element, inherit) =>
                 {
                     var getCustomAttributesMethod = ReflectedMethods.MakeClosuredGetCustomAttributesMethodForType(type);
@@ -48,7 +48,7 @@ namespace Reflections
                     return ((object[])getCustomAttributesMethodInvocationResults).Any();
                 })).Memoize(true);
 
-        private static readonly Func<MemberInfo, bool> MemoizedIsInherited = ((Func<MemberInfo, bool>)(element =>
+        private static readonly Func<MemberInfo, bool> IsInheritedMemoized = ((Func<MemberInfo, bool>)(element =>
             {
                 var reflectedType = element.ReflectedType;
                 var declaringType = element.DeclaringType;
