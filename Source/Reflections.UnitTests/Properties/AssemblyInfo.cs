@@ -6,11 +6,13 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Reflections.UnitTests")]
 [assembly: AssemblyDescription("Unit Tests for the Reflections Library of Reflection Extensions.")]
+
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
+
 [assembly: AssemblyCompany("Eric Burcham")]
 [assembly: AssemblyProduct("Reflections")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]

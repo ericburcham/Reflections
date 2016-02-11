@@ -11,8 +11,8 @@ namespace Reflections
         public static readonly MethodInfo GetCustomAttributes =
             typeof(CustomAttributeExtensions).GetMethods(BindingFlags.Public | BindingFlags.Static)
                 .Where(mi => mi.Name == "GetCustomAttributes")
-                .Where(mi => mi.GetGenericArguments().Count() == 1)
-                .Where(mi => mi.GetParameters().Count() == 2)
+                .Where(mi => mi.GetGenericArguments().Length == 1)
+                .Where(mi => mi.GetParameters().Length == 2)
                 .Where(mi => mi.GetParameters()[0].ParameterType == typeof(MemberInfo))
                 .Single(mi => mi.GetParameters()[1].ParameterType == typeof(bool));
 
