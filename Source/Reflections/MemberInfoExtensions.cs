@@ -8,6 +8,24 @@ namespace Reflections
 {
     public static class MemberInfoExtensions
     {
+        // Test all of these attribute usages:
+        //   Assembly
+        //   Module
+        //   Class
+        //   Struct
+        //   Enum
+        //   Constructor
+        //   Method
+        //   Property
+        //   Field
+        //   Event
+        //   Interface
+        //   Parameter
+        //   Delegate
+        //   ReturnValue
+        //   GenericParameter
+        //   All
+
         public static bool DoesNotHaveAttribute<T>(this MemberInfo element, bool inherit = false) where T : Attribute
         {
             return !HasAttribute<T>(element, inherit);
