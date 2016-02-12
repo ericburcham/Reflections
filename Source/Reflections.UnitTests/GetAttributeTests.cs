@@ -37,13 +37,13 @@ namespace Reflections.UnitTests
 
         private Assembly _testAssembly;
 
-        private TypeInfo _testClass;
+        private Type _testClass;
 
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
             _testAssembly = GetType().Assembly;
-            _testClass = typeof(ClassWithSeveralDummyAttributes).GetTypeInfo();
+            _testClass = typeof(ClassWithSeveralDummyAttributes);
         }
 
         [Test]

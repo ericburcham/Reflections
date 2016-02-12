@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 using Funky;
 
@@ -7,9 +9,33 @@ namespace Reflections
 {
     public static class TypeExtensions
     {
+        private static readonly ThreadsafeCache<Tuple<Type, Type>, object> GetAttributeCache = new ThreadsafeCache<Tuple<Type, Type>, object>();
+
         public static IEnumerable<Type> GetAssemblyTypes(this Type type)
         {
             return GetAssemblyTypesMemoized(type);
+        }
+
+        public static T GetAttribute<T>(this Type type) where T : Attribute
+        {
+            var tuple = Tuple.Create(type, typeof(T));
+            object result;
+
+            if (GetAttributeCache.TryGetValue(tuple, out result))
+            {
+                return (T)result;
+            }
+
+            result = type.GetCustomAttributes<T>().SingleOrDefault();
+
+            GetAttributeCache.TryAdd(tuple, result);
+
+            return (T)result;
+        }
+
+        public static T GetAttribute<T>(this Type type, Func<T, bool> predicate) where T : Attribute
+        {
+            return type.GetCustomAttributes<T>().SingleOrDefault(predicate);
         }
 
         public static bool IsGeneric(this Type type)
