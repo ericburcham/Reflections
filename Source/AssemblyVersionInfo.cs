@@ -9,6 +9,5 @@ using System.Reflection;
 //      MINOR Version - When you add functionality in a backwards-compatible manner, and
 //      PATCH Version - When you make backwards-compatible bug fixes.
 //      REVISION Version - Never.
-//
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.0.1.0")]
+[assembly: AssemblyFileVersion("2.0.1.0")]
