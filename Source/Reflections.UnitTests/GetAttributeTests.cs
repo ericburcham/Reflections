@@ -39,8 +39,8 @@ namespace Reflections.UnitTests
 
         private Type _testClass;
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetup()
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
             _testAssembly = GetType().Assembly;
             _testClass = typeof(ClassWithSeveralDummyAttributes);
