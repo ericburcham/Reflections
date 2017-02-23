@@ -9,7 +9,7 @@ $solutionFile = ".\Source\Reflections.sln"
 
 # Standard PowerShell Functions -------------------------------------------------------------------
 function Create-Directory([string]$path) {
-	New-Item -ItemType Directory -Force -Path $path
+    New-Item -ItemType Directory -Force -Path $path
 }
 
 function Delete-Directory([string]$path) {
@@ -25,9 +25,9 @@ function Invoke-Compile {
         [Parameter(Position=0,Mandatory=1)] [string]$slnPath = $null,
         [Parameter(Position=1,Mandatory=0)] [string]$configuration = "Debug",
         [Parameter(Position=2,Mandatory=0)] [string]$platform = "x64"
-	)
+    )
     
-	Write-Host "Running Build for solution @" $slnPath -ForegroundColor Cyan
+    Write-Host "Running Build for solution @" $slnPath -ForegroundColor Cyan
     $config = "Configuration=" + $configuration + ";Platform="+ $platform
     exec { & $msbuildExe $slnPath /m /nologo /p:$($config) /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=../StrongNameKey.snk /t:build /v:m }
 }
@@ -51,13 +51,13 @@ task BuildAllConfigurations -description "Builds all valid solution configuratio
 task BuildAllConfigurationsWithPrerequisites -description "Builds all valid solution configurations.  Runs prerequisites first." -depends RestorePackages, BuildDebug, BuildRelease
 
 task BuildDebug -description "Builds Reflections.sln in the debug configuration." {
-	Invoke-Compile $SolutionFile "Debug" "Any CPU"
+    Invoke-Compile $SolutionFile "Debug" "Any CPU"
 }
 
 task BuildDebugWithPrerequisites -description "Builds Reflections.sln in the debug configuration.  Runs prerequisite steps first." -depends RestorePackages, BuildDebug
 
 task BuildRelease -description "Builds Reflections.sln in the release configuration." {
-	Invoke-Compile $SolutionFile "Release" "Any CPU"
+    Invoke-Compile $SolutionFile "Release" "Any CPU"
 }
 
 task BuildReleaseWithPrerequisites -description "Builds Reflections.sln in the debug configuration.  Runs prerequisite steps first." -depends RestorePackages, BuildRelease
@@ -67,46 +67,46 @@ task CleanAll -description "Runs a git clean -xdf.  Prompts first if untracked f
 
     IF ($gitStatus.Contains("??"))
     {
-	    Write-Host "About to delete any untracked files.  Press 'Y' to continue or any other key to cancel." -foregroundcolor "yellow"
-	    $continue = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp").Character
-	    IF ($continue -ne "Y" -and $continue -ne "y")
-	    {
-		    Write-Error "CleanAll canceled."
-	    }
+        Write-Host "About to delete any untracked files.  Press 'Y' to continue or any other key to cancel." -foregroundcolor "yellow"
+        $continue = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp").Character
+        IF ($continue -ne "Y" -and $continue -ne "y")
+        {
+            Write-Error "CleanAll canceled."
+        }
     }
 
-	# test to see if packages is a link or a real directory
-	if (Test-ReparsePoint("packages/")) {
-		# packages is a NTFS Reparse point
-		# delete everything in packages but 
-		Echo "Packages is a link. Will keep it but delete its content."
-		Remove-Item .\packages\* -Force -Recurse
-		git clean -xdf -e "*.suo" -e "packages/"
-	} else {
-		git clean -xdf -e "*.suo" 
-	}
+    # test to see if packages is a link or a real directory
+    if (Test-ReparsePoint("packages/")) {
+        # packages is a NTFS Reparse point
+        # delete everything in packages but 
+        Echo "Packages is a link. Will keep it but delete its content."
+        Remove-Item .\packages\* -Force -Recurse
+        git clean -xdf -e "*.suo" -e "packages/"
+    } else {
+        git clean -xdf -e "*.suo" 
+    }
 }
 
 task Pack -description "Packs Reflections as a nuget package." {
-	Delete-Directory $packageDirectory
+    Delete-Directory $packageDirectory
     Create-Directory $packageDirectory
-	exec { & $nugetExe pack $reflectionsProject -OutputDirectory $packageDirectory -Prop Configuration=Release -Symbols }
+    exec { & $nugetExe pack $reflectionsProject -OutputDirectory $packageDirectory -Prop Configuration=Release -Symbols }
 }
 
 task PackWithPrerequisites -description "Packs Reflections as a nuget package.  Runs prerequisites first." -depends RestorePackages, BuildDebug, BuildRelease, Pack
 
 task Push -description "Pushes Reflections to nuget.org." {
-	$packages = Get-ChildItem $packageDirectory\Reflections.*.nupkg
-	foreach ($package in $packages)
-	{
-		exec { & $nugetExe push $package.FullName }
-	}
+    $packages = Get-ChildItem $packageDirectory\Reflections.*.nupkg
+    foreach ($package in $packages)
+    {
+        exec { & $nugetExe push $package.FullName }
+    }
 }
 
 task PushWithPrerequisites -depends RestorePackages, BuildDebug, BuildRelease, Pack, Push -description "Pushes Relfections to nuget.org.  Runs prerequisites first."
 
 task RestorePackages -description "Restores all nuget packages in the solution." {
-	exec { & $nugetExe restore $solutionFile }
+    exec { & $nugetExe restore $solutionFile }
 }
 
 task Start:VisualStudio -description "Opens Reflections.sln in Visual Studio" {
