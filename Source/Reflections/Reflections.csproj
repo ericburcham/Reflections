@@ -36,8 +36,8 @@
     <AssemblyOriginatorKeyFile>..\StrongNameKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Funky, Version=2.1.0.0, Culture=neutral, PublicKeyToken=a8f81b30c6987415, processorArchitecture=MSIL">
-      <HintPath>..\packages\Funky.2.1.0.0\lib\net451\Funky.dll</HintPath>
+    <Reference Include="Funky, Version=2.1.1.0, Culture=neutral, PublicKeyToken=a8f81b30c6987415, processorArchitecture=MSIL">
+      <HintPath>..\packages\Funky.2.1.1.0\lib\net451\Funky.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
