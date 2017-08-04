@@ -11,6 +11,8 @@ namespace Reflections
     {
         private static readonly ThreadsafeCache<Tuple<Type, Type>, object> GetAttributeCache = new ThreadsafeCache<Tuple<Type, Type>, object>();
 
+        private static readonly ThreadsafeCache<Tuple<Type, Type>, object> GetAttributesCache = new ThreadsafeCache<Tuple<Type, Type>, object>();
+
         public static IEnumerable<Type> GetAssemblyTypes(this Type type)
         {
             return GetAssemblyTypesMemoized(type);
@@ -33,9 +35,31 @@ namespace Reflections
             return (T)result;
         }
 
+        public static IEnumerable<T> GetAttributes<T>(this Type type) where T : Attribute
+        {
+            var tuple = Tuple.Create(type, typeof(T));
+            object result;
+
+            if (GetAttributesCache.TryGetValue(tuple, out result))
+            {
+                return (IEnumerable<T>)result;
+            }
+
+            result = type.GetCustomAttributes<T>();
+
+            GetAttributesCache.TryAdd(tuple, result);
+
+            return (IEnumerable<T>)result;
+        }
+
         public static T GetAttribute<T>(this Type type, Func<T, bool> predicate) where T : Attribute
         {
             return type.GetCustomAttributes<T>().SingleOrDefault(predicate);
+        }
+
+        public static IEnumerable<T> GetAttributes<T>(this Type type, Func<T, bool> predicate) where T : Attribute
+        {
+            return type.GetCustomAttributes<T>().Where(predicate);
         }
 
         public static bool IsGeneric(this Type type)
