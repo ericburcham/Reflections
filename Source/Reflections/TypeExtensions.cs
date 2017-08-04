@@ -28,15 +28,9 @@ namespace Reflections
                 return (T)result;
             }
 
-            if (type.HasAttribute<T>())
-            {
-                result = type.GetCustomAttributes<T>().SingleOrDefault();
-                GetAttributeCache.TryAdd(tuple, result);
-            }
-            else
-            {
-                GetAttributeCache.TryAdd(tuple, null);
-            }
+            result = type.GetCustomAttributes<T>().SingleOrDefault();
+
+            GetAttributeCache.TryAdd(tuple, result);
 
             return (T)result;
         }
@@ -53,7 +47,7 @@ namespace Reflections
 
             result = type.GetCustomAttributes<T>();
 
-            GetAttributeCache.TryAdd(tuple, result);
+            GetAttributesCache.TryAdd(tuple, result);
 
             return (IEnumerable<T>)result;
         }
