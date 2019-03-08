@@ -51,7 +51,7 @@ namespace Reflections.UnitTests
             Action action = () => targetElement.IsInherited();
 
             // Assert
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace Reflections.UnitTests
             Action action = () => targetElement.IsNotInherited();
 
             // Assert
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Reflections.UnitTests
             Action action = () => _testAssembly.GetAttribute<DummyWithMultipleAllowedAttribute>();
 
             // Assert
-            action.ShouldThrow<InvalidOperationException>();
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Reflections.UnitTests
             Action action = () => _testAssembly.GetAttribute<DummyWithMultipleAllowedAttribute>(attribute => attribute.Message != null);
 
             // Assert
-            action.ShouldThrow<InvalidOperationException>();
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace Reflections.UnitTests
             Action action = () => _testType.GetAttribute<DummyWithMultipleAllowedAttribute>();
 
             // Assert
-            action.ShouldThrow<InvalidOperationException>();
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -184,7 +184,7 @@ namespace Reflections.UnitTests
                 () => _testType.GetAttribute<DummyWithMultipleAllowedAttribute>(attribute => attribute.Message != null);
 
             // Assert
-            action.ShouldThrow<InvalidOperationException>();
+            action.Should().Throw<InvalidOperationException>();
         }
     }
 }

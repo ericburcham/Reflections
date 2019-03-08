@@ -79,7 +79,7 @@ namespace Reflections.UnitTests
             Action action = () => targetElement.IsNotOverride();
 
             // Assert
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace Reflections.UnitTests
             Action action = () => targetElement.IsOverride();
 
             // Assert
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }
