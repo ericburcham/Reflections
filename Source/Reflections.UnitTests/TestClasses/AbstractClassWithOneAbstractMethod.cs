@@ -2,6 +2,7 @@
 {
     internal abstract class AbstractClassWithOneAbstractMethod
     {
+        // ReSharper disable once UnusedMember.Global
         public abstract string AbstractMethod();
     }
 }

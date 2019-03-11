@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
-
 using NUnit.Framework;
-
 using Reflections.UnitTests.TestClasses;
 
 namespace Reflections.UnitTests
@@ -10,7 +8,7 @@ namespace Reflections.UnitTests
     public class IsOfTypeTests
     {
         [Test]
-        public void IsNotOfTypeReturnsFalseWhenExtendedTypeIsDerivedFromTypeArgumentType()
+        public void IsNotOfTypeGenericReturnsFalseWhenExtendedTypeIsDerivedFromTypeArgumentType()
         {
             // Arrange
             var extendedTypeClass = typeof(DerivedClass);
@@ -23,7 +21,7 @@ namespace Reflections.UnitTests
         }
 
         [Test]
-        public void IsNotOfTypeReturnsTrueWhenExtendedTypeAndTypeArgumentTypeAreNotDerivedFromEachOther()
+        public void IsNotOfTypeGenericReturnsTrueWhenExtendedTypeAndTypeArgumentTypeAreNotDerivedFromEachOther()
         {
             // Arrange
             var extendedClassType1 = typeof(UnrelatedClassOne);
@@ -39,20 +37,63 @@ namespace Reflections.UnitTests
         }
 
         [Test]
+        public void IsNotOfTypeGenericReturnsTrueWhenExtendedTypeIsNotDerivedFromTypeArgumentType()
+        {
+            // Arrange
+            var extendedTypeClass = typeof(BaseClass);
+
+            // Act
+            var result = extendedTypeClass.IsNotOfType<GenericDerivedClass>();
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+
+        [Test]
+        public void IsNotOfTypeReturnsFalseWhenExtendedTypeIsDerivedFromTypeArgumentType()
+        {
+            // Arrange
+            var extendedTypeClass = typeof(DerivedClass);
+
+            // Act
+            var result = extendedTypeClass.IsNotOfType(typeof(BaseClass));
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsNotOfTypeReturnsTrueWhenExtendedTypeAndTypeArgumentTypeAreNotDerivedFromEachOther()
+        {
+            // Arrange
+            var extendedClassType1 = typeof(UnrelatedClassOne);
+            var extendedClassType2 = typeof(UnrelatedClassTwo);
+
+            // Act
+            var result1 = extendedClassType1.IsNotOfType(typeof(UnrelatedClassTwo));
+            var result2 = extendedClassType2.IsNotOfType(typeof(UnrelatedClassOne));
+
+            // Assert
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+        }
+
+        [Test]
         public void IsNotOfTypeReturnsTrueWhenExtendedTypeIsNotDerivedFromTypeArgumentType()
         {
             // Arrange
             var extendedTypeClass = typeof(BaseClass);
 
             // Act
-            var result = extendedTypeClass.IsNotOfType<DerivedClass>();
+            var result = extendedTypeClass.IsNotOfType(typeof(GenericDerivedClass));
 
             // Assert
             result.Should().BeTrue();
         }
 
         [Test]
-        public void IsOfTypeReturnsFalseWhenExtendedTypeAndTypeArgumentTypeAreNotDerivedFromEachOther()
+        public void IsOfTypeGenericReturnsFalseWhenExtendedTypeAndTypeArgumentTypeAreNotDerivedFromEachOther()
         {
             // Arrange
             var extendedClassType1 = typeof(UnrelatedClassOne);
@@ -68,13 +109,55 @@ namespace Reflections.UnitTests
         }
 
         [Test]
+        public void IsOfTypeGenericReturnsFalseWhenExtendedTypeIsNotDerivedFromTypeArgumentType()
+        {
+            // Arrange
+            var extendedTypeClass = typeof(BaseClass);
+
+            // Act
+            var result = extendedTypeClass.IsOfType<GenericDerivedClass>();
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsOfTypeGenericReturnsTrueWhenExtendedTypeIsDerivedFromTypeArgumentType()
+        {
+            // Arrange
+            var extendedTypeClass = typeof(DerivedClass);
+
+            // Act
+            var result = extendedTypeClass.IsOfType<BaseClass>();
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsOfTypeReturnsFalseWhenExtendedTypeAndTypeArgumentTypeAreNotDerivedFromEachOther()
+        {
+            // Arrange
+            var extendedClassType1 = typeof(UnrelatedClassOne);
+            var extendedClassType2 = typeof(UnrelatedClassTwo);
+
+            // Act
+            var result1 = extendedClassType1.IsOfType(typeof(UnrelatedClassTwo));
+            var result2 = extendedClassType2.IsOfType(typeof(UnrelatedClassOne));
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+        }
+
+        [Test]
         public void IsOfTypeReturnsFalseWhenExtendedTypeIsNotDerivedFromTypeArgumentType()
         {
             // Arrange
             var extendedTypeClass = typeof(BaseClass);
 
             // Act
-            var result = extendedTypeClass.IsOfType<DerivedClass>();
+            var result = extendedTypeClass.IsOfType(typeof(GenericDerivedClass));
 
             // Assert
             result.Should().BeFalse();
@@ -87,10 +170,30 @@ namespace Reflections.UnitTests
             var extendedTypeClass = typeof(DerivedClass);
 
             // Act
-            var result = extendedTypeClass.IsOfType<BaseClass>();
+            var result = extendedTypeClass.IsOfType(typeof(BaseClass));
 
             // Assert
             result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsOfTypeReturnsTrueWhenExtendedGenericTypeIsDerivedFromGenericTypeArgumentType()
+        {
+            var extendedTypeClass = typeof(GenericDerivedClass);
+
+            var result = extendedTypeClass.IsOfType(typeof(GenericBaseClass<>));
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsNotOfTypeReturnsFalseWhenExtendedGenericTypeIsDerivedFromGenericTypeArgumentType()
+        {
+            var extendedTypeClass = typeof(GenericDerivedClass);
+
+            var result = extendedTypeClass.IsNotOfType(typeof(GenericBaseClass<>));
+
+            result.Should().BeFalse();
         }
     }
 }

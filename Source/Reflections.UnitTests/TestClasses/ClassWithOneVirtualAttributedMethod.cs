@@ -2,6 +2,7 @@
 {
     internal class ClassWithOneVirtualAttributedMethod
     {
+        // ReSharper disable once UnusedMember.Global
         [Dummy]
         public virtual string DeclaredMethod()
         {

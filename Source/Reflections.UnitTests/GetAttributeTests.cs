@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Reflection;
-
 using FluentAssertions;
-
 using NUnit.Framework;
-
 using Reflections.UnitTests.TestClasses;
 
 namespace Reflections.UnitTests
@@ -52,10 +49,30 @@ namespace Reflections.UnitTests
         }
 
         [Test]
-        public void GetAttributeReturnsRequestedAtrributeWhenCallingAssemblyHasTheRequestedAttribute()
+        public void GetAttributeReturnsNullWhenCallingTypeDoesNotHaveTheRequestedAttribute()
+        {
+            // Act
+            var result = _testType.GetAttribute<UnusedDummyAttribute>();
+
+            // Assert
+            result.Should().BeNull();
+        }
+
+        [Test]
+        public void GetAttributeReturnsRequestedAttributeWhenCallingAssemblyHasTheRequestedAttribute()
         {
             // Act
             var result = _testAssembly.GetAttribute<DummyAttribute>();
+
+            // Assert
+            result.Should().BeOfType<DummyAttribute>();
+        }
+
+        [Test]
+        public void GetAttributeReturnsRequestedAttributeWhenCallingTypeHasTheRequestedAttribute()
+        {
+            // Act
+            var result = _testType.GetAttribute<DummyAttribute>();
 
             // Assert
             result.Should().BeOfType<DummyAttribute>();
@@ -68,7 +85,17 @@ namespace Reflections.UnitTests
             Action action = () => _testAssembly.GetAttribute<DummyWithMultipleAllowedAttribute>();
 
             // Assert
-            action.ShouldThrow<InvalidOperationException>();
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        [Test]
+        public void GetAttributeThrowsInvalidOperationExceptionWhenCallingTypeHasMoreThanOneRequestedAttribute()
+        {
+            // Act
+            Action action = () => _testType.GetAttribute<DummyWithMultipleAllowedAttribute>();
+
+            // Assert
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -82,66 +109,6 @@ namespace Reflections.UnitTests
         }
 
         [Test]
-        public void GetAttributeWithPredicateReturnsRequestedAttributeWhenCallingAssemblyHasMoreThanOneRequestedAttributeButOnlyOneMatchesThePredicate()
-        {
-            // Act
-            var result = _testAssembly.GetAttribute<DummyWithMultipleAllowedAttribute>(attribute => attribute.Message == "Dummy1");
-
-            // Assert
-            result.Should().BeOfType<DummyWithMultipleAllowedAttribute>();
-        }
-
-        [Test]
-        public void GetAttributeWithPredicateReturnsRequestedAttributeWhenCallingAssemblyHasOneMatchingRequestedAttribute()
-        {
-            // Act
-            var result = _testAssembly.GetAttribute<DummyAttribute>(attribute => attribute.Message == "Dummy");
-
-            // Assert
-            result.Should().BeOfType<DummyAttribute>();
-        }
-
-        [Test]
-        public void GetAttributeWithPredicateThrowsInvalidOperationExceptionWhenCallingAssemblyHasMoreThanOneMatchingRequestedAttribute()
-        {
-            // Act
-            Action action = () => _testAssembly.GetAttribute<DummyWithMultipleAllowedAttribute>(attribute => attribute.Message != null);
-
-            // Assert
-            action.ShouldThrow<InvalidOperationException>();
-        }
-
-        [Test]
-        public void GetAttributeReturnsNullWhenCallingTypeDoesNotHaveTheRequestedAttribute()
-        {
-            // Act
-            var result = _testType.GetAttribute<UnusedDummyAttribute>();
-
-            // Assert
-            result.Should().BeNull();
-        }
-
-        [Test]
-        public void GetAttributeReturnsRequestedAtrributeWhenCallingTypeHasTheRequestedAttribute()
-        {
-            // Act
-            var result = _testType.GetAttribute<DummyAttribute>();
-
-            // Assert
-            result.Should().BeOfType<DummyAttribute>();
-        }
-
-        [Test]
-        public void GetAttributeThrowsInvalidOperationExceptionWhenCallingTypeHasMoreThanOneRequestedAttribute()
-        {
-            // Act
-            Action action = () => _testType.GetAttribute<DummyWithMultipleAllowedAttribute>();
-
-            // Assert
-            action.ShouldThrow<InvalidOperationException>();
-        }
-
-        [Test]
         public void GetAttributeWithPredicateReturnsNullWhenCallingTypeDoesNotHaveTheRequestedAttribute()
         {
             // Act
@@ -149,6 +116,30 @@ namespace Reflections.UnitTests
 
             // Assert
             result.Should().BeNull();
+        }
+
+        [Test]
+        public void
+            GetAttributeWithPredicateReturnsRequestedAttributeWhenCallingAssemblyHasMoreThanOneRequestedAttributeButOnlyOneMatchesThePredicate()
+        {
+            // Act
+            var result =
+                _testAssembly.GetAttribute<DummyWithMultipleAllowedAttribute>(
+                    attribute => attribute.Message == "Dummy1");
+
+            // Assert
+            result.Should().BeOfType<DummyWithMultipleAllowedAttribute>();
+        }
+
+        [Test]
+        public void
+            GetAttributeWithPredicateReturnsRequestedAttributeWhenCallingAssemblyHasOneMatchingRequestedAttribute()
+        {
+            // Act
+            var result = _testAssembly.GetAttribute<DummyAttribute>(attribute => attribute.Message == "Dummy");
+
+            // Assert
+            result.Should().BeOfType<DummyAttribute>();
         }
 
         [Test]
@@ -176,6 +167,18 @@ namespace Reflections.UnitTests
 
         [Test]
         public void
+            GetAttributeWithPredicateThrowsInvalidOperationExceptionWhenCallingAssemblyHasMoreThanOneMatchingRequestedAttribute()
+        {
+            // Act
+            Action action = () =>
+                _testAssembly.GetAttribute<DummyWithMultipleAllowedAttribute>(attribute => attribute.Message != null);
+
+            // Assert
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        [Test]
+        public void
             GetAttributeWithPredicateThrowsInvalidOperationExceptionWhenCallingTypeHasMoreThanOneMatchingRequestedAttribute
             ()
         {
@@ -184,7 +187,7 @@ namespace Reflections.UnitTests
                 () => _testType.GetAttribute<DummyWithMultipleAllowedAttribute>(attribute => attribute.Message != null);
 
             // Assert
-            action.ShouldThrow<InvalidOperationException>();
+            action.Should().Throw<InvalidOperationException>();
         }
     }
 }
