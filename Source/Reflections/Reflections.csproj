@@ -60,7 +60,7 @@
     <Compile Include="MethodInfoExtensions.cs" />
     <Compile Include="Internal\ReflectedMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Internal\ThreadSafeCacheFoo.cs" />
+    <Compile Include="Internal\ThreadSafeCache.cs" />
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

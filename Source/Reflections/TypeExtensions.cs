@@ -8,11 +8,11 @@ namespace Reflections
 {
     public static class TypeExtensions
     {
-        private static readonly ThreadSafeCacheFoo<Tuple<Type, Type>, object> GetAttributeCacheFoo =
-            new ThreadSafeCacheFoo<Tuple<Type, Type>, object>();
+        private static readonly ThreadSafeCache<Tuple<Type, Type>, object> GetAttributeCache =
+            new ThreadSafeCache<Tuple<Type, Type>, object>();
 
-        private static readonly ThreadSafeCacheFoo<Tuple<Type, Type>, object> GetAttributesCacheFoo =
-            new ThreadSafeCacheFoo<Tuple<Type, Type>, object>();
+        private static readonly ThreadSafeCache<Tuple<Type, Type>, object> GetAttributesCache =
+            new ThreadSafeCache<Tuple<Type, Type>, object>();
 
         private static readonly Func<Type, Type[]> GetAssemblyTypesMemoized =
             ((Func<Type, Type[]>) (type => type.Assembly.GetTypes())).Memoize(true);
@@ -34,11 +34,11 @@ namespace Reflections
             var tuple = Tuple.Create(type, typeof(T));
             object result;
 
-            if (GetAttributeCacheFoo.TryGetValue(tuple, out result)) return (T) result;
+            if (GetAttributeCache.TryGetValue(tuple, out result)) return (T) result;
 
             result = type.GetCustomAttributes<T>().SingleOrDefault();
 
-            GetAttributeCacheFoo.TryAdd(tuple, result);
+            GetAttributeCache.TryAdd(tuple, result);
 
             return (T) result;
         }
@@ -48,11 +48,11 @@ namespace Reflections
             var tuple = Tuple.Create(type, typeof(T));
             object result;
 
-            if (GetAttributesCacheFoo.TryGetValue(tuple, out result)) return (IEnumerable<T>) result;
+            if (GetAttributesCache.TryGetValue(tuple, out result)) return (IEnumerable<T>) result;
 
             result = type.GetCustomAttributes<T>();
 
-            GetAttributesCacheFoo.TryAdd(tuple, result);
+            GetAttributesCache.TryAdd(tuple, result);
 
             return (IEnumerable<T>) result;
         }

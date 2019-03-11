@@ -7,22 +7,22 @@ namespace Reflections
 {
     public static class AssemblyExtensions
     {
-        private static readonly ThreadSafeCacheFoo<Tuple<Assembly, Type>, object> GetAttributeCacheFoo =
-            new ThreadSafeCacheFoo<Tuple<Assembly, Type>, object>();
+        private static readonly ThreadSafeCache<Tuple<Assembly, Type>, object> GetAttributeCache =
+            new ThreadSafeCache<Tuple<Assembly, Type>, object>();
 
-        private static readonly ThreadSafeCacheFoo<Tuple<Assembly, Type>, object> GetAttributesCacheFoo =
-            new ThreadSafeCacheFoo<Tuple<Assembly, Type>, object>();
+        private static readonly ThreadSafeCache<Tuple<Assembly, Type>, object> GetAttributesCache =
+            new ThreadSafeCache<Tuple<Assembly, Type>, object>();
 
         public static T GetAttribute<T>(this Assembly assembly) where T : Attribute
         {
             var tuple = Tuple.Create(assembly, typeof(T));
             object result;
 
-            if (GetAttributeCacheFoo.TryGetValue(tuple, out result)) return result != null ? (T) result : null;
+            if (GetAttributeCache.TryGetValue(tuple, out result)) return result != null ? (T) result : null;
 
             result = assembly.GetCustomAttributes<T>().SingleOrDefault();
 
-            GetAttributeCacheFoo.TryAdd(tuple, result);
+            GetAttributeCache.TryAdd(tuple, result);
 
             return (T) result;
         }
@@ -32,11 +32,11 @@ namespace Reflections
             var tuple = Tuple.Create(assembly, typeof(T));
             object result;
 
-            if (GetAttributesCacheFoo.TryGetValue(tuple, out result)) return (IEnumerable<T>) result;
+            if (GetAttributesCache.TryGetValue(tuple, out result)) return (IEnumerable<T>) result;
 
             result = assembly.GetCustomAttributes<T>();
 
-            GetAttributesCacheFoo.TryAdd(tuple, result);
+            GetAttributesCache.TryAdd(tuple, result);
 
             return (IEnumerable<T>) result;
         }
