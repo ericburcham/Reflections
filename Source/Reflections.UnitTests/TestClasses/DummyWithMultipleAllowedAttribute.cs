@@ -8,6 +8,7 @@ namespace Reflections.UnitTests.TestClasses
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
     internal class DummyWithMultipleAllowedAttribute : Attribute
     {
+        // ReSharper disable once UnusedMember.Global
         public DummyWithMultipleAllowedAttribute()
         {
         }

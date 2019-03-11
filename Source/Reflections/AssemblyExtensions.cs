@@ -7,11 +7,11 @@ namespace Reflections
 {
     public static class AssemblyExtensions
     {
-        private static readonly ThreadsafeCache<Tuple<Assembly, Type>, object> GetAttributeCache =
-            new ThreadsafeCache<Tuple<Assembly, Type>, object>();
+        private static readonly ThreadSafeCache<Tuple<Assembly, Type>, object> GetAttributeCache =
+            new ThreadSafeCache<Tuple<Assembly, Type>, object>();
 
-        private static readonly ThreadsafeCache<Tuple<Assembly, Type>, object> GetAttributesCache =
-            new ThreadsafeCache<Tuple<Assembly, Type>, object>();
+        private static readonly ThreadSafeCache<Tuple<Assembly, Type>, object> GetAttributesCache =
+            new ThreadSafeCache<Tuple<Assembly, Type>, object>();
 
         public static T GetAttribute<T>(this Assembly assembly) where T : Attribute
         {

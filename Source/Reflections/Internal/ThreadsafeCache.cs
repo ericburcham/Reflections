@@ -3,9 +3,9 @@ using System.Threading;
 
 namespace Reflections
 {
-    internal class ThreadsafeCache<TKey, TValue>
+    internal class ThreadSafeCache<TKey, TValue>
     {
-        public ThreadsafeCache()
+        public ThreadSafeCache()
         {
             Cache = new Dictionary<TKey, TValue>();
             CacheLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);

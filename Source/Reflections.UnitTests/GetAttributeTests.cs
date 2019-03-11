@@ -59,7 +59,7 @@ namespace Reflections.UnitTests
         }
 
         [Test]
-        public void GetAttributeReturnsRequestedAtrributeWhenCallingAssemblyHasTheRequestedAttribute()
+        public void GetAttributeReturnsRequestedAttributeWhenCallingAssemblyHasTheRequestedAttribute()
         {
             // Act
             var result = _testAssembly.GetAttribute<DummyAttribute>();
@@ -69,7 +69,7 @@ namespace Reflections.UnitTests
         }
 
         [Test]
-        public void GetAttributeReturnsRequestedAtrributeWhenCallingTypeHasTheRequestedAttribute()
+        public void GetAttributeReturnsRequestedAttributeWhenCallingTypeHasTheRequestedAttribute()
         {
             // Act
             var result = _testType.GetAttribute<DummyAttribute>();

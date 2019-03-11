@@ -59,7 +59,7 @@ namespace Reflections.UnitTests
         }
 
         [Test]
-        public void GetAttributesReturnsEnumberableContainingRequestedAtrributeWhenCallingTypeHasTheRequestedAttribute()
+        public void GetAttributesReturnsEnumerableContainingRequestedAttributeWhenCallingTypeHasTheRequestedAttribute()
         {
             // Act
             var result = _testType.GetAttributes<DummyAttribute>();
@@ -95,7 +95,7 @@ namespace Reflections.UnitTests
 
         [Test]
         public void
-            GetAttributesReturnsEnumerableContainingRequestedAtrributeWhenCallingAssemblyHasTheRequestedAttribute()
+            GetAttributesReturnsEnumerableContainingRequestedAttributeWhenCallingAssemblyHasTheRequestedAttribute()
         {
             // Act
             var result = _testAssembly.GetAttributes<DummyAttribute>();

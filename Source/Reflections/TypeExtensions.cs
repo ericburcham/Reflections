@@ -8,11 +8,11 @@ namespace Reflections
 {
     public static class TypeExtensions
     {
-        private static readonly ThreadsafeCache<Tuple<Type, Type>, object> GetAttributeCache =
-            new ThreadsafeCache<Tuple<Type, Type>, object>();
+        private static readonly ThreadSafeCache<Tuple<Type, Type>, object> GetAttributeCache =
+            new ThreadSafeCache<Tuple<Type, Type>, object>();
 
-        private static readonly ThreadsafeCache<Tuple<Type, Type>, object> GetAttributesCache =
-            new ThreadsafeCache<Tuple<Type, Type>, object>();
+        private static readonly ThreadSafeCache<Tuple<Type, Type>, object> GetAttributesCache =
+            new ThreadSafeCache<Tuple<Type, Type>, object>();
 
         private static readonly Func<Type, Type[]> GetAssemblyTypesMemoized =
             ((Func<Type, Type[]>) (type => type.Assembly.GetTypes())).Memoize(true);
