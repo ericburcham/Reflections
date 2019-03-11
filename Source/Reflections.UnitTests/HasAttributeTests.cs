@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
-
 using NUnit.Framework;
-
 using Reflections.UnitTests.TestClasses;
 
 namespace Reflections.UnitTests

@@ -3,7 +3,7 @@
 namespace Reflections.UnitTests.TestClasses
 {
     /// <summary>
-    /// A dummy attribute class for decorating things to test resolution of Attribute presence.
+    ///     A dummy attribute class for decorating things to test resolution of Attribute presence.
     /// </summary>
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
     internal class DummyWithMultipleAllowedAttribute : Attribute

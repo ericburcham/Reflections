@@ -11,6 +11,10 @@ namespace Reflections
             CacheLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
         }
 
+        protected Dictionary<TKey, TValue> Cache { get; }
+
+        protected ReaderWriterLockSlim CacheLock { get; }
+
         public bool TryGetValue(TKey key, out TValue value)
         {
             value = default(TValue);
@@ -54,10 +58,5 @@ namespace Reflections
 
             return false;
         }
-
-        protected Dictionary<TKey, TValue> Cache { get; }
-
-        protected ReaderWriterLockSlim CacheLock { get; }
-
     }
 }

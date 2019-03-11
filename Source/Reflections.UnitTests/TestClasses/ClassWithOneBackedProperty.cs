@@ -7,14 +7,8 @@
         // ReSharper disable once ConvertToAutoProperty
         public string DeclaredProperty
         {
-            get
-            {
-                return _declaredProperty;
-            }
-            set
-            {
-                _declaredProperty = value;
-            }
+            get { return _declaredProperty; }
+            set { _declaredProperty = value; }
         }
     }
 }
