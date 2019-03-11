@@ -21,8 +21,27 @@ namespace Reflections
             ((Func<Type, bool>) (type => type.IsGenericType)).Memoize();
 
         private static readonly Func<Type, Type, bool> IsOfTypeMemoized =
-            ((Func<Type, Type, bool>) ((extendedType, typeParameterType) =>
-                typeParameterType.IsAssignableFrom(extendedType))).Memoize(true);
+            ((Func<Type, Type, bool>) ((typeToCheck, target) =>
+            {
+                if (target.IsAssignableFrom(typeToCheck))
+                {
+                    return true;
+                }
+
+                while (typeToCheck != null && typeToCheck != typeof(object))
+                {
+                    var currentType = typeToCheck.IsGenericType ? typeToCheck.GetGenericTypeDefinition() : typeToCheck;
+                    if (target == currentType)
+                    {
+                        return true;
+                    }
+
+                    typeToCheck = typeToCheck.BaseType;
+                }
+
+
+                return false;
+            })).Memoize(true);
 
         public static IEnumerable<Type> GetAssemblyTypes(this Type type)
         {
@@ -82,14 +101,14 @@ namespace Reflections
             return !IsGeneric(type);
         }
 
-        public static bool IsNotOfType<T>(this Type type)
+        public static bool IsNotOfType<T>(this Type typeToCheck)
         {
-            return IsNotOfType(type, typeof(T));
+            return IsNotOfType(typeToCheck, typeof(T));
         }
 
-        public static bool IsNotOfType(this Type type, Type target)
+        public static bool IsNotOfType(this Type typeToCheck, Type targetType)
         {
-            return !type.IsOfType(target);
+            return !typeToCheck.IsOfType(targetType);
         }
 
         public static bool IsNullable(this Type type)
@@ -98,14 +117,14 @@ namespace Reflections
             return type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
-        public static bool IsOfType<T>(this Type type)
+        public static bool IsOfType<T>(this Type typeToCheck)
         {
-            return IsOfType(type, typeof(T));
+            return IsOfType(typeToCheck, typeof(T));
         }
 
-        public static bool IsOfType(this Type type, Type target)
+        public static bool IsOfType(this Type typeToCheck, Type targetType)
         {
-            return IsOfTypeMemoized(type, target);
+            return IsOfTypeMemoized(typeToCheck, targetType);
         }
     }
 }
