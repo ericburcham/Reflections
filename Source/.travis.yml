@@ -1,0 +1,8 @@
+language: csharp
+
+solution: Reflections.sln
+mono: none
+dotnet: 2.1.502
+script:
+ - dotnet restore
+...
