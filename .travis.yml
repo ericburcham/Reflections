@@ -1,8 +1,0 @@
-install:
-  - nuget restore ./Source/Reflections.sln
-  - nuget install NUnit.ConsoleRunner -Version 3.9.0 -OutputDirectory nunit-runner
-language: csharp
-script:
-  - xbuild /p:Configuration=Release ./Source/Reflections.sln
-  - mono ./nunit-runner/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./Source/Reflections.UnitTests/bin/Release/Reflections.UnitTests.dll
-solution: ./Source/Reflections.sln
