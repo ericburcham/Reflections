@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-
 using Funky;
 
 namespace Reflections
@@ -16,7 +15,11 @@ namespace Reflections
                 .Where(mi => mi.GetParameters()[0].ParameterType == typeof(MemberInfo))
                 .Single(mi => mi.GetParameters()[1].ParameterType == typeof(bool));
 
-        private static readonly Func<Type, MethodInfo> ClosuredGetCustomAttributesMethod = MakeClosuredGetCustomAttributesMethod;
+        private static readonly Func<Type, MethodInfo> ClosuredGetCustomAttributesMethod =
+            MakeClosuredGetCustomAttributesMethod;
+
+        private static readonly Func<Type, MethodInfo> MemoizedGetCustomAttributesMethod =
+            ClosuredGetCustomAttributesMethod.Memoize(true);
 
         private static MethodInfo MakeClosuredGetCustomAttributesMethod(Type type)
         {
@@ -27,7 +30,5 @@ namespace Reflections
         {
             return MemoizedGetCustomAttributesMethod(type);
         }
-
-        private static readonly Func<Type, MethodInfo> MemoizedGetCustomAttributesMethod = ClosuredGetCustomAttributesMethod.Memoize(true);
     }
 }

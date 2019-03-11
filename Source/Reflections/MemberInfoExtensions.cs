@@ -1,13 +1,27 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-
 using Funky;
 
 namespace Reflections
 {
     public static class MemberInfoExtensions
     {
+        private static readonly Func<Type, MemberInfo, bool, bool> HasAttributeMemoized =
+            ((Func<Type, MemberInfo, bool, bool>) ((type, element, inherit) =>
+            {
+                var getCustomAttributesMethod = ReflectedMethods.MakeClosuredGetCustomAttributesMethodForType(type);
+                var getCustomAttributesMethodInvocationResults =
+                    getCustomAttributesMethod.Invoke(null, new object[] {element, inherit});
+                return ((object[]) getCustomAttributesMethodInvocationResults).Any();
+            })).Memoize(true);
+
+        private static readonly Func<MemberInfo, bool> IsInheritedMemoized = ((Func<MemberInfo, bool>) (element =>
+        {
+            var reflectedType = element.ReflectedType;
+            var declaringType = element.DeclaringType;
+            return reflectedType != declaringType;
+        })).Memoize(true);
         // Test all of these attribute usages:
         //   Assembly
         //   Module
@@ -52,25 +66,7 @@ namespace Reflections
 
         private static void ThrowIfNull(this MemberInfo element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element), "methodInfo may not be null.");
-            }
+            if (element == null) throw new ArgumentNullException(nameof(element), "methodInfo may not be null.");
         }
-
-        private static readonly Func<Type, MemberInfo, bool, bool> HasAttributeMemoized =
-            ((Func<Type, MemberInfo, bool, bool>)((type, element, inherit) =>
-                {
-                    var getCustomAttributesMethod = ReflectedMethods.MakeClosuredGetCustomAttributesMethodForType(type);
-                    var getCustomAttributesMethodInvocationResults = getCustomAttributesMethod.Invoke(null, new object[] { element, inherit });
-                    return ((object[])getCustomAttributesMethodInvocationResults).Any();
-                })).Memoize(true);
-
-        private static readonly Func<MemberInfo, bool> IsInheritedMemoized = ((Func<MemberInfo, bool>)(element =>
-            {
-                var reflectedType = element.ReflectedType;
-                var declaringType = element.DeclaringType;
-                return reflectedType != declaringType;
-            })).Memoize(true);
     }
 }

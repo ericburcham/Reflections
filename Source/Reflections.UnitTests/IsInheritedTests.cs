@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Reflection;
-
 using FluentAssertions;
-
 using NUnit.Framework;
-
 using Reflections.UnitTests.TestClasses;
 
 namespace Reflections.UnitTests
@@ -51,7 +48,7 @@ namespace Reflections.UnitTests
             Action action = () => targetElement.IsInherited();
 
             // Assert
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Test]
@@ -93,7 +90,7 @@ namespace Reflections.UnitTests
             Action action = () => targetElement.IsNotInherited();
 
             // Assert
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }
