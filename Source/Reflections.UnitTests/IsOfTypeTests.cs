@@ -43,7 +43,7 @@ namespace Reflections.UnitTests
             var extendedTypeClass = typeof(BaseClass);
 
             // Act
-            var result = extendedTypeClass.IsNotOfType<DerivedClass>();
+            var result = extendedTypeClass.IsNotOfType<GenericDerivedClass>();
 
             // Assert
             result.Should().BeTrue();
@@ -86,7 +86,7 @@ namespace Reflections.UnitTests
             var extendedTypeClass = typeof(BaseClass);
 
             // Act
-            var result = extendedTypeClass.IsNotOfType(typeof(DerivedClass));
+            var result = extendedTypeClass.IsNotOfType(typeof(GenericDerivedClass));
 
             // Assert
             result.Should().BeTrue();
@@ -115,7 +115,7 @@ namespace Reflections.UnitTests
             var extendedTypeClass = typeof(BaseClass);
 
             // Act
-            var result = extendedTypeClass.IsOfType<DerivedClass>();
+            var result = extendedTypeClass.IsOfType<GenericDerivedClass>();
 
             // Assert
             result.Should().BeFalse();
@@ -157,7 +157,7 @@ namespace Reflections.UnitTests
             var extendedTypeClass = typeof(BaseClass);
 
             // Act
-            var result = extendedTypeClass.IsOfType(typeof(DerivedClass));
+            var result = extendedTypeClass.IsOfType(typeof(GenericDerivedClass));
 
             // Assert
             result.Should().BeFalse();
@@ -174,6 +174,26 @@ namespace Reflections.UnitTests
 
             // Assert
             result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsOfTypeReturnsTrueWhenExtendedGenericTypeIsDerivedFromGenericTypeArgumentType()
+        {
+            var extendedTypeClass = typeof(GenericDerivedClass);
+
+            var result = extendedTypeClass.IsOfType(typeof(GenericBaseClass<>));
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsNotOfTypeReturnsFalseWhenExtendedGenericTypeIsDerivedFromGenericTypeArgumentType()
+        {
+            var extendedTypeClass = typeof(GenericDerivedClass);
+
+            var result = extendedTypeClass.IsNotOfType(typeof(GenericBaseClass<>));
+
+            result.Should().BeFalse();
         }
     }
 }

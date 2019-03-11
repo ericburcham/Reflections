@@ -89,6 +89,8 @@
     <Compile Include="TestClasses\ClassWithOneVirtualMethod.cs" />
     <Compile Include="TestClasses\DerivedClass.cs" />
     <Compile Include="TestClasses\DummyAttribute.cs" />
+    <Compile Include="TestClasses\GenericBaseClass.cs" />
+    <Compile Include="TestClasses\GenericDerivedClass.cs" />
     <Compile Include="TestClasses\UnrelatedClassOne.cs" />
     <Compile Include="TestClasses\UnrelatedClassTwo.cs" />
     <Compile Include="TestClasses\UnusedDummyAttribute.cs" />
