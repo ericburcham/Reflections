@@ -1,22 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflections", "Reflections\Reflections.csproj", "{47302AAE-6E9D-4FFA-A2F7-2EA0551C1899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reflections", "Reflections\Reflections.csproj", "{BE7039F2-A773-4D5F-86E0-04163F3D403F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflections.UnitTests", "Reflections.UnitTests\Reflections.UnitTests.csproj", "{C93B2D50-7E03-476A-8669-8063A22462A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reflections.UnitTests", "Reflections.UnitTests\Reflections.UnitTests.csproj", "{A2192A48-C7CE-45B7-A7D9-A37807F3A513}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{892F53EF-719F-4F7A-9A58-F654BE56F74F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{538F32B2-572A-44A0-B33D-D1F42204D530}"
 	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E0C31C56-0DBA-4C26-9115-4E1757344E74}"
-	ProjectSection(SolutionItems) = preProject
-		AssemblyVersionInfo.cs = AssemblyVersionInfo.cs
 		StrongNameKey.snk = StrongNameKey.snk
 	EndProjectSection
 EndProject
@@ -26,16 +18,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{47302AAE-6E9D-4FFA-A2F7-2EA0551C1899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47302AAE-6E9D-4FFA-A2F7-2EA0551C1899}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47302AAE-6E9D-4FFA-A2F7-2EA0551C1899}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47302AAE-6E9D-4FFA-A2F7-2EA0551C1899}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C93B2D50-7E03-476A-8669-8063A22462A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C93B2D50-7E03-476A-8669-8063A22462A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C93B2D50-7E03-476A-8669-8063A22462A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C93B2D50-7E03-476A-8669-8063A22462A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE7039F2-A773-4D5F-86E0-04163F3D403F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE7039F2-A773-4D5F-86E0-04163F3D403F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE7039F2-A773-4D5F-86E0-04163F3D403F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE7039F2-A773-4D5F-86E0-04163F3D403F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2192A48-C7CE-45B7-A7D9-A37807F3A513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2192A48-C7CE-45B7-A7D9-A37807F3A513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2192A48-C7CE-45B7-A7D9-A37807F3A513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2192A48-C7CE-45B7-A7D9-A37807F3A513}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5B663E18-6F7C-48A5-9AC9-C01C15779659}
 	EndGlobalSection
 EndGlobal
